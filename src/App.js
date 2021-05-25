@@ -1,10 +1,13 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from 'react'
+import { Route, Switch, useHistory } from 'react-router-dom'
+import axios from 'axios';
+import New from './components/New';
+import View from './components/View';
 
-function App() {
-  
+const App = () => {
+
   const handleInput = (event) => {
-    setState({ ...state, [event.target.name]: event.target.value })
+    // setState({ ...state, [event.target.name]: event.target.value })
   }
 
   return (
@@ -15,7 +18,7 @@ function App() {
           render={() => {
             return(
               <New
-                handleInput={handleInput}
+                // handleInput={handleInput}
               />
             )
           }}

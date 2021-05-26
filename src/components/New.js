@@ -59,6 +59,7 @@ function New(props) {
         <textarea id="message" name="message" rows="5" cols="50" onChange={handleInput} /><br/>
 
         <input type="submit" onClick={handleSubmit} />
+        <input type="reset" />
 
       </form>
 

@@ -1,7 +1,7 @@
 .grid-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: 0.3fr 2fr;
+  grid-template-rows: 0.3fr 2fr 1fr;
   gap: 0px 0px;
   grid-template-areas:
     ". ."
@@ -19,13 +19,60 @@
 .featureCards {
   grid-row-start: 0;
   grid-column-start: 0;
+  max-width: 50vw;
+  border-style: solid;
+  border-color: gold;
+}
+
+.featureCompleted {
+  grid-row-start: -2;
+  grid-column-start: 0;
+  max-width: 50vw;
 }
 
 .bugCards {
   grid-row-start: 0;
   grid-column-start: 1;
+  max-width: 50vw;
+}
+
+.bugCompleted {
+  grid-row-start: -2;
+  grid-column-start: 1;
+  max-width: 50vw;
 }
 
 .card {
-  background-color: yellow;
+  display: grid;
+  grid-template-columns: 2fr .5fr;
+  gap: 0px 0px;
+  word-wrap: break-word;
+  border-style: solid;
+  border-width: 1px;
+  margin: 3px;
+  padding: 5px;
+  border-radius: 5px;
+  border-color: black;
+  max-width: 100%;
+}
+
+.buttonContainer {
+  grid-column-start: 2;
+  display: flex;
+  max-width: 100%;
+  max-height: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.completed {
+  opacity: 50%;
+}
+
+.infoContainer {
+  max-width: 100%;
+  grid-column-start: 1;
+  border-style: solid;
+  border-color: red;
+  word-wrap: inherit;
 }

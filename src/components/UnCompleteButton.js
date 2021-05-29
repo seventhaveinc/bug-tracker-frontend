@@ -4,7 +4,6 @@ import axios from "axios";
 function UnCompleteButton({ itemId, changeCompleted }) {
 
   const buttonClicked = async () => {
-    console.log('clicked');
 
     const config = {
       method: 'put',

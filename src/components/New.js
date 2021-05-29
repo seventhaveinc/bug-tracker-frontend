@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, } from "react";
 import axios from "axios";
+import { useHistory } from 'react-router-dom'
 import '../new.css';
 
 function New(props) {
@@ -8,6 +9,16 @@ function New(props) {
     email: "",
     message: ""
   });
+  const [warnStyle, changeWarnStyle] = useState({
+    color: 'red',
+    opacity: 0
+  });
+  const [fields, changeFields] = useState({
+    color: 'red',
+    opacity: 0
+  });
+
+  const history = useHistory();
 
   const validateEmail = (email) => {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
@@ -15,7 +26,7 @@ function New(props) {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if (state.username && state.email && state.message && state.requestType != "") {
+    if (state.username && state.email && state.message && state.requestType) {
       if (validateEmail(state.email)) {
         try {
           const response = await axios.post((process.env.REACT_APP_API_URL || 'http://localhost:3001') + '/bugs', {
@@ -24,15 +35,22 @@ function New(props) {
           requestType: state.requestType,
           message: state.message
           });
+          history.push('/view');
         } catch (error) {
           console.error(error);
         };
       } else {
-        console.log(`Invalid email address!`);
-      }
+        changeWarnStyle({
+          color: 'red',
+          opacity: 100
+        });
+      };
     } else {
-      console.log(`you didn't fill in all the fields lol`);
-    }
+      changeFields({
+        color: 'red',
+        opacity: 100
+      });
+    };
   };
 
   const handleInput = (event) => {
@@ -44,13 +62,15 @@ function New(props) {
 
       <div className="box">
 
+        <span><h2>Submit a Ticket</h2></span> <span style={fields}>You must fill in all fields!</span>
+
         <form>
 
           <label htmlFor="username">Name:</label><br/>
           <input type="text" id="uname" name="username" onChange={handleInput} /><br/>
 
           <label htmlFor="email">Email:</label><br/>
-          <input type="email" id="email" name="email" onChange={handleInput} /><br/>
+          <input type="email" id="email" name="email" onChange={handleInput} /> <span style={warnStyle}>* incorrect format</span><br/>
 
           <label htmlFor="requestType">Type of Request:</label><br/>
           <input type="radio" id="bug" name="requestType" value="bugReport" onChange={handleInput} />
@@ -65,6 +85,8 @@ function New(props) {
           <input type="reset" />
 
         </form>
+
+        <h4><a href="/view">See All</a></h4>
 
       </div>
 

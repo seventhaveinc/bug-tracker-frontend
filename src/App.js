@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Route, Switch, useHistory } from 'react-router-dom'
+import { Route, Switch, useHistory, Redirect } from 'react-router-dom'
 import axios from 'axios';
 import New from './components/New';
 import View from './components/View';
@@ -13,6 +13,15 @@ const App = () => {
   return (
     <div className="body">
       <Switch>
+        <Route
+          exact
+          path="/"
+          render={() => {
+            return(
+              <Redirect to="/view" />
+            )
+          }}
+        />
         <Route
           path="/new"
           render={() => {

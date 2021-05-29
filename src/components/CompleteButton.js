@@ -4,7 +4,6 @@ import axios from "axios";
 function CompleteButton({ itemId, changeCompleted }) {
 
   const buttonClicked = async () => {
-    console.log('clicked');
 
     const config = {
       method: 'put',
@@ -17,7 +16,7 @@ function CompleteButton({ itemId, changeCompleted }) {
 
     const response = await axios(config)
     response.data.completed = true
-    
+
     if (response.data.requestType === "bugReport") {
       changeCompleted(response.data, "bugs");
     } else {

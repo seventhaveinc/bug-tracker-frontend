@@ -77,6 +77,7 @@ function View(props) {
   return (
     <div className="grid-container">
       <div className="topbar">
+        <h4 className="link"><a href="/new">New Ticket</a></h4>
         <h1 className="title">Bug Tracker/Feature Requests</h1>
       </div>
       <div className="bugCards">
@@ -122,7 +123,6 @@ function View(props) {
       <div className="featureCards">
         <h3 className="littleTitle">Feature Requests</h3>
         {featureForms.map((item) => {
-          console.log("TAG:item",item);
           return (
             <div key={item._id} className="card">
               <div className="infoContainer">

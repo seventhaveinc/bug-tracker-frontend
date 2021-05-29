@@ -1,7 +1,7 @@
 .grid-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: 0.3fr 2fr 1fr;
+  grid-template-rows: max-content max-content max-content;
   gap: 0px 0px;
   grid-template-areas:
     ". ."
@@ -20,8 +20,6 @@
   grid-row-start: 0;
   grid-column-start: 0;
   max-width: 50vw;
-  border-style: solid;
-  border-color: gold;
 }
 
 .featureCompleted {
@@ -72,7 +70,5 @@
 .infoContainer {
   max-width: 100%;
   grid-column-start: 1;
-  border-style: solid;
-  border-color: red;
   word-wrap: inherit;
 }

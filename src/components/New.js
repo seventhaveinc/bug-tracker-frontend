@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import '../new.css';
 
 function New(props) {
   const [state, setState] = useState({
@@ -39,29 +40,33 @@ function New(props) {
   }
 
   return (
-    <div>
+    <div className="page">
 
-      <form>
+      <div className="box">
 
-        <label htmlFor="username">Name:</label><br/>
-        <input type="text" id="uname" name="username" onChange={handleInput} /><br/>
+        <form>
 
-        <label htmlFor="email">Email:</label><br/>
-        <input type="email" id="email" name="email" onChange={handleInput} /><br/>
+          <label htmlFor="username">Name:</label><br/>
+          <input type="text" id="uname" name="username" onChange={handleInput} /><br/>
 
-        <label htmlFor="requestType">Type of Request:</label><br/>
-        <input type="radio" id="bug" name="requestType" value="bugReport" onChange={handleInput} />
-        <label htmlFor="bug">Bug Report</label>
-        <input type="radio" id="feature" name="requestType" value="featureRequest" onChange={handleInput} />
-        <label htmlFor="feature">Feature Request</label><br/>
+          <label htmlFor="email">Email:</label><br/>
+          <input type="email" id="email" name="email" onChange={handleInput} /><br/>
 
-        <label htmlFor="message">Message:</label><br/>
-        <textarea id="message" name="message" rows="5" cols="50" onChange={handleInput} /><br/>
+          <label htmlFor="requestType">Type of Request:</label><br/>
+          <input type="radio" id="bug" name="requestType" value="bugReport" onChange={handleInput} />
+          <label htmlFor="bug">Bug Report</label>
+          <input type="radio" id="feature" name="requestType" value="featureRequest" onChange={handleInput} />
+          <label htmlFor="feature">Feature Request</label><br/>
 
-        <input type="submit" onClick={handleSubmit} />
-        <input type="reset" />
+          <label htmlFor="message">Message:</label><br/>
+          <textarea id="message" name="message" rows="5" cols="50" onChange={handleInput} /><br/>
 
-      </form>
+          <input type="submit" onClick={handleSubmit} />
+          <input type="reset" />
+
+        </form>
+
+      </div>
 
     </div>
   )

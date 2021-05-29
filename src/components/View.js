@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import '../view.css'
-import Button from './CompleteButton';
+import CompleteButton from './CompleteButton';
+import UnCompleteButton from './UnCompleteButton';
 
 function View(props) {
   const [completed, setCompleted] = useState([]);
@@ -15,7 +16,17 @@ function View(props) {
     return (formList.filter(item => item.completed === type));
   }
 
-  const handleRemove = (item) => {
+  const handleUnCompleteRemove = (item) => {
+    if (item.requestType === "bugReport") {
+      const newArr = completedBugs.filter((thing) => thing._id !== item._id);
+      setCompletedBugs(newArr);
+    } else {
+      const newArr = completedFeatures.filter((thing) => thing._id !== item._id);
+      setCompletedFeatures(newArr);
+    }
+  }
+
+  const handleCompleteRemove = (item) => {
     if (item.requestType === "bugReport") {
       const newArr = bugForms.filter((thing) => thing._id !== item._id);
       setBugForms(newArr);
@@ -31,26 +42,20 @@ function View(props) {
     } else {
       setCompletedFeatures([...completedFeatures, response]);
     }
-    handleRemove(response);
+    handleCompleteRemove(response);
+  }
+
+  const changeUnCompleted = (response, whichOne) => {
+    if (whichOne === "bugs") {
+      setBugForms([...bugForms, response]);
+    } else {
+      setFeatureForms([...featureForms, response])
+    }
+    handleUnCompleteRemove(response);
   }
 
   const sortType = (formList, toSort) => {
     return (formList.filter(item => item.requestType === toSort))
-  }
-
-  const sortFormsOldest = (formList) => {
-    return (formList.sort((a,b) => {
-    return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
-    }))
-  }
-
-  const sortFormsNewest = (formList) => {
-    return sortFormsOldest(formList).reverse();
-  }
-
-  const changeComplete = async (updateId) => {
-    console.log('test');
-    const response = await axios.put((process.env.REACT_APP_API_URL || 'http://localhost:3001/') + updateId);
   }
 
   useEffect(() => {
@@ -72,10 +77,10 @@ function View(props) {
   return (
     <div className="grid-container">
       <div className="topbar">
-        <h1>Bug Tracker/Feature Requests</h1>
+        <h1 className="title">Bug Tracker/Feature Requests</h1>
       </div>
       <div className="bugCards">
-        <h3>Bug Reports</h3>
+        <h3 className="littleTitle">Bug Reports</h3>
         {bugForms.map((item) => {
           return (
             <div key={item._id} className="card">
@@ -85,7 +90,7 @@ function View(props) {
                 {item.message}<br/>
               </div>
               <div className="buttonContainer">
-                <Button
+                <CompleteButton
                   itemId={item._id}
                   changeCompleted={changeCompleted}
                 />
@@ -95,7 +100,7 @@ function View(props) {
         })}
       </div>
       <div className="bugCompleted">
-        <h3>Completed Bugs</h3>
+        <h3 className="littleTitle">Completed Bugs</h3>
         {completedBugs.map((item) => {
           return (
             <div key={item._id} className="card completed">
@@ -104,12 +109,18 @@ function View(props) {
                 {item.email}<br/>
                 {item.message}<br/>
               </div>
+              <div className="buttonContainer">
+                <UnCompleteButton
+                  itemId={item._id}
+                  changeCompleted={changeUnCompleted}
+                />
+              </div>
             </div>
           )
         })}
       </div>
       <div className="featureCards">
-        <h3>Feature Requests</h3>
+        <h3 className="littleTitle">Feature Requests</h3>
         {featureForms.map((item) => {
           console.log("TAG:item",item);
           return (
@@ -120,7 +131,7 @@ function View(props) {
                 {item.message}<br/>
               </div>
               <div className="buttonContainer">
-                <Button
+                <CompleteButton
                   itemId={item._id}
                   changeCompleted={changeCompleted}
                 />
@@ -130,7 +141,7 @@ function View(props) {
         })}
       </div>
       <div className="featureCompleted">
-        <h3>Completed Feature Requests</h3>
+        <h3 className="littleTitle">Completed Feature Requests</h3>
         {completedFeatures.map((item) => {
           return (
             <div key={item._id} className="card completed">
@@ -138,6 +149,12 @@ function View(props) {
                 {item.username}<br/>
                 {item.email}<br/>
                 {item.message}<br/>
+              </div>
+              <div className="buttonContainer">
+                <UnCompleteButton
+                  itemId={item._id}
+                  changeCompleted={changeUnCompleted}
+                />
               </div>
             </div>
           )

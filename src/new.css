@@ -1,0 +1,15 @@
+.page {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  background-color: antiquewhite;
+  width: 100vw;
+  height: 100vh;
+}
+
+.box {
+  background-color: #caa47f;
+  margin: 10%;
+  padding: 15px;
+  box-shadow: black;
+}

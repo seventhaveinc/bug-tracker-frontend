@@ -1,70 +1,51 @@
-# Getting Started with Create React App
+# Bug Tracker/Feature Request Tracker
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Overview
+This app is meant to be a tracker for user submitted bugs and feature requests. It uses React for the frontend and an express backend found in another repository.
 
-## Available Scripts
+## View Page
+The view page is where the comprehensive list of all of the feature requests and bugs that have been submitted resides. It contains four sections, divided into two columns. One side for bugs and completed bugs, and the other for features and completed features. For a general name for both of them, I call them 'forms'.
 
-In the project directory, you can run:
+### sortCompleted
+This function filters the completed 'forms' into the category of completed and not completed.
 
-### `yarn start`
+### handleUnCompleteRemove
+This function handles the removal of the completed tickets from state when they are reset so that they may be put back into the open section.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### handleCompleteRemove
+This function does the same thing except in reverse, and removes from the open tickets when they are completed. One improvement I could make on this in the future is to combine these into the same function.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### changeCompleted
+This function spreads the original 'completedBugs' array in and adds the newly completed ticket into it as completed
 
-### `yarn test`
+### changeUnCompleted
+This function does the same as the previous except in reverse. Again, an improvement I can make in the future is to combine these two functions.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### sortType
+This function filters the bugs from the feature requests and is used when the data is originally received from the backend.
 
-### `yarn build`
+### first useEffect
+This function is where the data is retreived from the backend. It calls the sortCompleted function to sort the completed forms from the not-completed forms.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### second useEffect
+This function triggers when the state variable notCompleted is changed, which happens once the data received from the backend. I put this in a separate useEffect because when it was in the original, it triggered before the data was received because it did not directly use response.data.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### JSX
+I sorted the entire page into a div which I used with CSS Grid to organize into sections. The 'topbar' class is the bar with the 'New Ticket' link and the title on it. Then, the 'bugCards' div is where all of the ticket cards are put into. They are again separated using CSS Grid. The cards are mapped in with their unique key being the id received from MongoDB. Right now they provide information organized very basically, the top line being the username, followed by the email on the second line, and the message that the user left with their ticket on the third line.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## New Page
+This page is for submitting a new ticket to the system.
+### validateEmail
+This function contains the Regular Expression for checking if an email is in the right format. It is not very advanced and currently only checks whether there is an '@' symbol followed by a period later in the submission.
 
-### `yarn eject`
+### handleSubmit
+This function handles the submission of data to the backend. It first checks to see if all of the fields have been filled out, and then checks to see if the email is in the correct format. If the first one comes back false, it shows a message in the DOM that says that the user must fill out all fields to be able to submit. If the email is not in the correct format, it shows a message in the DOM that the email is not in the correct format.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### handleInput
+This function handles adding the input of information into the form to the DOM. it spreads in the previous state and then changes the specified key-value pair in state to be what is currently in the text box.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### JSX
+The JSX for this page is relatively simple. I did not use CSS Grid for this page and instead elected to use basic Flexbox. I used basic input fields for 'username' and 'email'. For the type of request I used radio buttons, and for the message I used a 'textarea'. I also elected to add a reset button, which I just learned exists through this project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### Things to add
+Things I could add in the future are possibly a delete button to weed out unintenional submissions or spam. The backend supports a delete route, I just did not include it in the React app yet. Another item would be a sort feature for sorting by date added or date completed for the completed section.

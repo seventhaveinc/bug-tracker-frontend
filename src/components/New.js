@@ -122,10 +122,21 @@ function New(props) {
             onClick={changeTabBug}>
             Bug Report
           </button>
+
+          <button
+            className='tabLinks'
+            name="seeAll"
+            onClick={() => {
+              history.push('/view');
+            }}>
+            See All  
+          </button>
         
         </div>
 
         <div className="content">
+
+          <h2>Submit a Ticket</h2> &nbsp; &nbsp; <h4 style={fields}>You must fill out all fields!</h4> <hr/>
         
           <form>
           
@@ -136,6 +147,7 @@ function New(props) {
               id="username"
               name="username"
               onChange={handleInput}
+              className='input'
             /><br/>
 
             <label htmlFor="email">Email:</label><br/>
@@ -145,6 +157,7 @@ function New(props) {
               id="email"
               name="email"
               onChange={handleInput}
+              className='input'
             /><br/>
 
             {activeTab.map((item) => {
@@ -158,6 +171,7 @@ function New(props) {
                     onChange={handleInput}
                     rows="5"
                     cols="50"
+                    className='textarea'
                   /><br/>
                 </>
               )
@@ -166,6 +180,11 @@ function New(props) {
             <input
               type="submit"
               onClick={(activeTab[0] === 'reproduce') ? handleSubmitBugs : handleSubmitFeatures}
+              className='tabLinks'
+            />
+            <input
+              type="reset"
+              className='tabLinks'
             />
           </form>
         
@@ -190,8 +209,6 @@ function New(props) {
           <input type="reset" />
 
         </form> */}
-
-        <h4><a href="/view">See All</a></h4>
 
       </div>
 

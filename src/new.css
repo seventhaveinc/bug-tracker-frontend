@@ -2,13 +2,30 @@
   display: flex;
   justify-content: center;
   align-content: center;
-  background-color: antiquewhite;
+  background-color: ghostwhite;
   width: 100vw;
   height: 100vh;
 }
 
 .box {
-  background-color: #caa47f;
+  background-color: #e5e7eb;
   margin: 10%;
   padding: 15px;
+}
+
+.tabLinks {
+  background-color: inherit;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+}
+
+.tabLinks:hover {
+  background-color: #ddd;
+}
+
+.active {
+  background-color: #ccc;
 }

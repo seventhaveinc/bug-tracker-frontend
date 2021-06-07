@@ -43,6 +43,10 @@ function New(props) {
   const handleSubmitBugs = async (event) => {
     event.preventDefault();
     if (state.username && state.email && state.reproduce && state.expectedOutcome && state.actualOutcome) {
+      changeFields({
+        color: 'red',
+        opacity: 0
+      })
       if (validateEmail(state.email)) {
         try {
           const response = await axios.post((process.env.REACT_APP_API_URL || 'http://localhost:3001') + '/bugs', {
@@ -75,7 +79,7 @@ function New(props) {
     if (state.username && state.email && state.request) {
       if (validateEmail(state.email)) {
         try {
-          const response = await axios.post((process.env.REACT_APP_API_URL || 'http://localhost:3001') + '/bugs', {
+          const response = await axios.post((process.env.REACT_APP_API_URL || 'http://localhost:3001') + '/features', {
           username: state.username,
           email: state.email,
           request: state.request
@@ -136,7 +140,7 @@ function New(props) {
 
         <div className="content">
 
-          <h2>Submit a Ticket</h2> &nbsp; &nbsp; <h4 style={fields}>You must fill out all fields!</h4> <hr/>
+          <h2 className="heading">Submit a Ticket</h2> &nbsp; &nbsp; <h4 style={fields}>*You must fill out all fields!</h4> <hr/>
         
           <form>
           
@@ -153,13 +157,17 @@ function New(props) {
             <label htmlFor="email">Email:</label><br/>
 
             <input
-              type="text"
+              type="email"
               id="email"
               name="email"
               onChange={handleInput}
               className='input'
-            /><br/>
+            />
+            &nbsp; &nbsp;
+            <span style={warnStyle}>*Email is incorrently formatted</span>
+            <br/>
 
+            {/* This maps over the list I have saved to state and changes the form that is displayed based on which tab is clicked */}
             {activeTab.map((item) => {
 
               return(
@@ -180,35 +188,15 @@ function New(props) {
             <input
               type="submit"
               onClick={(activeTab[0] === 'reproduce') ? handleSubmitBugs : handleSubmitFeatures}
-              className='tabLinks'
+              className='tabLinks button'
             />
             <input
               type="reset"
-              className='tabLinks'
+              className='tabLinks button'
             />
           </form>
         
         </div>
-
-        {/* <span><h2>Submit a Ticket</h2></span> <span style={fields}>You must fill in all fields!</span> */}
-        
-        
-
-        {/* <form>
-
-          <label htmlFor="username">Name:</label><br/>
-          <input type="text" id="uname" name="username" onChange={handleInput} /><br/>
-
-          <label htmlFor="email">Email:</label><br/>
-          <input type="email" id="email" name="email" onChange={handleInput} /> <span style={warnStyle}>* incorrect format</span><br/>
-
-          <label htmlFor="message">Message:</label><br/>
-          <textarea id="message" name="message" rows="5" cols="50" onChange={handleInput} /><br/>
-
-          <input type="submit" onClick={handleSubmitFeatures} />
-          <input type="reset" />
-
-        </form> */}
 
       </div>
 

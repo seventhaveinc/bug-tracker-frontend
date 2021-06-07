@@ -34,11 +34,13 @@
 
 .input {
   border: none;
+  margin: 5px 0px;
 }
 
 .textarea {
   border: none;
   resize: none;
+  margin: 5px 0px;
 }
 
 h2 {

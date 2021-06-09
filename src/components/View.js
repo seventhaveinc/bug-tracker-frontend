@@ -11,6 +11,7 @@ function View(props) {
 
   const [bugTickets, setBugTickets] = useState([]);
   const [featureTickets, setFeatureTickets] = useState([]);
+  const [whichActive, setWhichActive] = useState('bugs');
 
   // const [bugReported, setBugReported] = useState([]);
   // const [bugInProgress, setBugInProgress] = useState([]);
@@ -37,12 +38,20 @@ function View(props) {
     fetchDataFeature();
   }, [])
 
-const handleSwitchStatus = (ticketList, item, toSwitchTo) => {
+  const handleSwitchStatus = (ticketList, item, toSwitchTo) => {
     if (ticketList === 'bug') {
       setBugTickets([...bugTickets, {...item, status: toSwitchTo}]);
     } else {
       setFeatureTickets([...featureTickets, {...item, status: toSwitchTo}]);
     };
+  };
+
+  const changeTabFeature = () => {
+    setWhichActive('features');
+  };
+
+  const changeTabBug = () => {
+    setWhichActive('bugs');
   };
 
   // const sortCompleted = (formList, type) => {
@@ -99,97 +108,119 @@ const handleSwitchStatus = (ticketList, item, toSwitchTo) => {
   // }, [notCompleted])
 
   return (
-    <BugTab/>
+    <div className="grid-container">
+      <div className="topbar">
+        <h4 className="link"><a href="/new">New Ticket</a></h4>
+        <h1 className="title">Bug Tracker/Feature Requests</h1>
+      </div>
+      <div className="tabs">
+        <button
+          className={(whichActive === 'features') ? 'active tabLinks' : 'tabLinks'}
+          name="features"
+          onClick={() => {
+            setWhichActive('features');
+          }}
+        >
+          Features
+        </button>
+        <button
+          className={(whichActive === 'bugs') ? 'active tabLinks' : 'tabLinks'}
+          name="bugs"
+          onClick={() => {
+            setWhichActive('bugs');
+          }}
+        >
+          Bugs
+        </button>
+      </div>
+      {(whichActive === 'bugs') ?
+      <BugTab
+        handleSwitchStatus={handleSwitchStatus}
+        bugTickets={bugTickets}
+      /> :
+      'test'}
+       {/*<div className="bugCards">
+         <h3 className="littleTitle">Bug Reports</h3>
+         {bugForms.map((item) => {
+          return (
+            <div key={item._id} className="card">
+              <div className="infoContainer">
+                {item.username}<br/>
+                {item.email}<br/>
+                {item.message}<br/>
+              </div>
+              <div className="buttonContainer">
+                <CompleteButton
+                  itemId={item._id}
+                  changeCompleted={changeCompleted}
+                />
+              </div>
+            </div>
+          )
+        })}
+      </div>
+      <div className="bugCompleted">
+        <h3 className="littleTitle">Completed Bugs</h3>
+        {completedBugs.map((item) => {
+          return (
+            <div key={item._id} className="card completed">
+              <div className="infoContainer">
+                {item.username}<br/>
+                {item.email}<br/>
+                {item.message}<br/>
+              </div>
+              <div className="buttonContainer">
+                <UnCompleteButton
+                  itemId={item._id}
+                  changeCompleted={changeUnCompleted}
+                />
+              </div>
+            </div>
+          )
+        })}
+      </div>
+      <div className="featureCards">
+        <h3 className="littleTitle">Feature Requests</h3>
+        {featureForms.map((item) => {
+          return (
+            <div key={item._id} className="card">
+              <div className="infoContainer">
+                {item.username}<br/>
+                {item.email}<br/>
+                {item.message}<br/>
+              </div>
+              <div className="buttonContainer">
+                <CompleteButton
+                  itemId={item._id}
+                  changeCompleted={changeCompleted}
+                />
+              </div>
+            </div>
+          )
+        })}
+      </div>
+      <div className="featureCompleted">
+        <h3 className="littleTitle">Completed Feature Requests</h3>
+        {completedFeatures.map((item) => {
+          return (
+            <div key={item._id} className="card completed">
+              <div className="infoContainer">
+                {item.username}<br/>
+                {item.email}<br/>
+                {item.message}<br/>
+              </div>
+              <div className="buttonContainer">
+                <UnCompleteButton
+                  itemId={item._id}
+                  changeCompleted={changeUnCompleted}
+                />
+              </div>
+            </div>
+          )
+        })}
+      </div> */}
+    </div>
   )
-
-  // return (
-  //   <div className="grid-container">
-  //     <div className="topbar">
-  //       <h4 className="link"><a href="/new">New Ticket</a></h4>
-  //       <h1 className="title">Bug Tracker/Feature Requests</h1>
-  //     </div>
-  //     <div className="bugCards">
-  //       <h3 className="littleTitle">Bug Reports</h3>
-  //       {bugForms.map((item) => {
-  //         return (
-  //           <div key={item._id} className="card">
-  //             <div className="infoContainer">
-  //               {item.username}<br/>
-  //               {item.email}<br/>
-  //               {item.message}<br/>
-  //             </div>
-  //             <div className="buttonContainer">
-  //               <CompleteButton
-  //                 itemId={item._id}
-  //                 changeCompleted={changeCompleted}
-  //               />
-  //             </div>
-  //           </div>
-  //         )
-  //       })}
-  //     </div>
-  //     <div className="bugCompleted">
-  //       <h3 className="littleTitle">Completed Bugs</h3>
-  //       {completedBugs.map((item) => {
-  //         return (
-  //           <div key={item._id} className="card completed">
-  //             <div className="infoContainer">
-  //               {item.username}<br/>
-  //               {item.email}<br/>
-  //               {item.message}<br/>
-  //             </div>
-  //             <div className="buttonContainer">
-  //               <UnCompleteButton
-  //                 itemId={item._id}
-  //                 changeCompleted={changeUnCompleted}
-  //               />
-  //             </div>
-  //           </div>
-  //         )
-  //       })}
-  //     </div>
-  //     <div className="featureCards">
-  //       <h3 className="littleTitle">Feature Requests</h3>
-  //       {featureForms.map((item) => {
-  //         return (
-  //           <div key={item._id} className="card">
-  //             <div className="infoContainer">
-  //               {item.username}<br/>
-  //               {item.email}<br/>
-  //               {item.message}<br/>
-  //             </div>
-  //             <div className="buttonContainer">
-  //               <CompleteButton
-  //                 itemId={item._id}
-  //                 changeCompleted={changeCompleted}
-  //               />
-  //             </div>
-  //           </div>
-  //         )
-  //       })}
-  //     </div>
-  //     <div className="featureCompleted">
-  //       <h3 className="littleTitle">Completed Feature Requests</h3>
-  //       {completedFeatures.map((item) => {
-  //         return (
-  //           <div key={item._id} className="card completed">
-  //             <div className="infoContainer">
-  //               {item.username}<br/>
-  //               {item.email}<br/>
-  //               {item.message}<br/>
-  //             </div>
-  //             <div className="buttonContainer">
-  //               <UnCompleteButton
-  //                 itemId={item._id}
-  //                 changeCompleted={changeUnCompleted}
-  //               />
-  //             </div>
-  //           </div>
-  //         )
-  //       })}
-  //     </div>
-  //   </div>
-  // )
 }
 
 export default View;

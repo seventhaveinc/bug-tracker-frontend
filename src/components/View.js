@@ -2,8 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import '../view.css'
 import BugTab from './BugTab.js'
-import CompleteButton from './CompleteButton';
-import UnCompleteButton from './UnCompleteButton';
+import FeatureTab from './FeatureTab.js'
 
 function View(props) {
 
@@ -26,9 +25,23 @@ function View(props) {
 
   const handleSwitchStatus = (ticketList, item, toSwitchTo) => {
     if (ticketList === 'bug') {
-      setBugTickets([...bugTickets, {...item, status: toSwitchTo}]);
+      let array = bugTickets;
+      const indexItem = array.indexOf(item);
+      if (indexItem > -1) {
+        array.splice(indexItem, 1);
+        setBugTickets([...array, {...item, status: toSwitchTo}]);
+
+        const response = axios.put((process.env.REACT_APP_API_URL || 'http://localhost:3001') + `/bugs/${item._id}`, {...item, status: toSwitchTo});
+      }
     } else {
-      setFeatureTickets([...featureTickets, {...item, status: toSwitchTo}]);
+      let array = featureTickets;
+      const indexItem = array.indexOf(item);
+      if (indexItem > -1) {
+        array.splice(indexItem, 1);
+        setFeatureTickets([...array, {...item, status: toSwitchTo}]);
+
+        const response = axios.put((process.env.REACT_APP_API_URL || 'http://localhost:3001') + `/features/${item._id}`, {...item, status: toSwitchTo});
+      }
     };
   };
 
@@ -59,11 +72,15 @@ function View(props) {
         </button>
       </div>
       {(whichActive === 'bugs') ?
-      <BugTab
-        handleSwitchStatus={handleSwitchStatus}
-        bugTickets={bugTickets}
-      /> :
-      'test'}
+        <BugTab
+          handleSwitchStatus={handleSwitchStatus}
+          bugTickets={bugTickets}
+        /> :
+        <FeatureTab
+          handleSwitchStatus={handleSwitchStatus}
+          featureTickets={featureTickets}
+        />
+        }
     </div>
   )
 }

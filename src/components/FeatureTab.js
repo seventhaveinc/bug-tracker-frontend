@@ -2,13 +2,13 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import '../view.css'
 
-export default function BugTab ({ handleSwitchStatus, bugTickets }) {
+export default function FeatureTab ({ handleSwitchStatus, featureTickets }) {
 
   return (
     <>
       <div className="columnTitles">
         <div className="columnTop">
-          <h3>Reported</h3>
+          <h3>Pending</h3>
         </div>
         <div className="columnTop middle">
           <h3>In Progress</h3>
@@ -18,33 +18,77 @@ export default function BugTab ({ handleSwitchStatus, bugTickets }) {
         </div>
       </div>
       <div className="cardContainer">
-        <div className="reported cardColumn">
-          {bugTickets.filter((filterItem) => filterItem.status === 'reported').map((mapItem) => {
+        <div className="pending cardColumn">
+          {featureTickets.filter((filterItem) => {
+            return (filterItem.status === 'pending' || filterItem.status === 'approved' || filterItem.status === 'denied') //spaghetti but it's the only thing that worked
+          }).map((mapItem) => {
             return (
-              <div className="card">
+              <div className={mapItem.status === 'approved' ? 'card approved' : (mapItem.status === 'denied') ? 'card denied' : 'card'}>
                 <div className="information">
                   <span className="defining">Username: </span>{mapItem.username}<br/>
                   <span className="defining">Email Address: </span>{mapItem.email}<br/>
-                  <span className="defining">Steps to Reproduce: </span>{mapItem.reproduce}<br/>
-                  <span className="defining">Expected Outcome: </span>{mapItem.expectedOutcome}<br/>
-                  <span className="defining">Actual Outcome: </span>{mapItem.actualOutcome}<br/>
+                  <span className="defining">Request: </span>{mapItem.request}<br/>
                 </div>
                 <div className="buttons">
-                  <button
-                    className="tabLinks"
-                    onClick={() => {
-                      handleSwitchStatus('bug', mapItem, 'inProgress')
-                    }}
-                  >
-                    Start
-                  </button>
+                  {mapItem.status === 'pending' ? 
+                    <>
+                      <button
+                        className="tabLinks"
+                        onClick={() => {
+                          handleSwitchStatus('feature', mapItem, 'approved')
+                        }}
+                      >
+                        Approve
+                      </button>
+                      <button
+                        className="tabLinks"
+                        onClick={() => {
+                          handleSwitchStatus('feature', mapItem, 'denied')
+                        }}
+                      >
+                        Deny
+                      </button>
+                    </>
+                  : null}
+                  {(mapItem.status === 'approved') ? 
+                    <>
+                      <button
+                        className="tabLinks"
+                        onClick={() => {
+                          handleSwitchStatus('feature', mapItem, 'pending')
+                        }}
+                      >
+                        Reset
+                      </button>
+                      <button
+                        className="tabLinks"
+                        onClick={() => {
+                          handleSwitchStatus('feature', mapItem, 'inProgress')
+                        }}
+                      >
+                        Start
+                      </button>
+                    </>
+                  : null}
+                  {(mapItem.status === 'denied') ? 
+                    <>
+                      <button
+                        className="tabLinks"
+                        onClick={() => {
+                          handleSwitchStatus('feature', mapItem, 'pending')
+                        }}
+                      >
+                        Reset
+                      </button>
+                    </>
+                  : null}
                 </div>
               </div>
             )
           })}
         </div>
         <div className="inProgress cardColumn middle">
-          {bugTickets.filter((filterItem) => filterItem.status === 'inProgress').map((mapItem) => {
+          {featureTickets.filter((filterItem) => filterItem.status === 'inProgress').map((mapItem) => {
             return (
               <div className="card">
                 <div className="information">
@@ -77,7 +121,7 @@ export default function BugTab ({ handleSwitchStatus, bugTickets }) {
           })}
         </div>
         <div className="completed cardColumn">
-          {bugTickets.filter((filterItem) => filterItem.status === 'completed').map((mapItem) => {
+          {featureTickets.filter((filterItem) => filterItem.status === 'completed').map((mapItem) => {
             return (
               <div className="card">
                 <div className="information">

@@ -50,8 +50,6 @@
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
-  border-bottom: 1px solid black;
-  border-top: 1px solid black;
 }
 
 .columnTop {
@@ -82,12 +80,16 @@
 }
 
 .card {
+  white-space: pre-wrap;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
   text-align: left;
-  border-bottom: 1px solid black;
-  flex-grow: 1;
+  padding: 5px;
+  border-radius: 5px;
+  background-color: #e5e7eb;
+  border: 2px solid rgba(5,113,118);
+  margin: 5px;
 }
 
 .information {
@@ -102,4 +104,13 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  border-left: 1px solid black;
+}
+
+.approved {
+  background-color: rgba(200, 249, 220);
+}
+
+.denied {
+  background-color: rgba(255, 165, 165);
 }

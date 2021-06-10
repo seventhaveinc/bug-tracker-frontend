@@ -20,7 +20,7 @@ export default function FeatureTab ({ handleSwitchStatus, featureTickets }) {
       <div className="cardContainer">
         <div className="pending cardColumn">
           {featureTickets.filter((filterItem) => {
-            return (filterItem.status === 'pending' || filterItem.status === 'approved' || filterItem.status === 'denied') //spaghetti but it's the only thing that worked
+            return (filterItem.status === 'pending' || filterItem.status === 'approved' || filterItem.status === 'denied') //spaghetti code but it's the only thing that worked
           }).map((mapItem) => {
             return (
               <div className={mapItem.status === 'approved' ? 'card approved' : (mapItem.status === 'denied') ? 'card denied' : 'card'}>
@@ -91,18 +91,16 @@ export default function FeatureTab ({ handleSwitchStatus, featureTickets }) {
           {featureTickets.filter((filterItem) => filterItem.status === 'inProgress').map((mapItem) => {
             return (
               <div className="card">
-                <div className="information">
+                  <div className="information">
                   <span className="defining">Username: </span>{mapItem.username}<br/>
                   <span className="defining">Email Address: </span>{mapItem.email}<br/>
-                  <span className="defining">Steps to Reproduce: </span>{mapItem.reproduce}<br/>
-                  <span className="defining">Expected Outcome: </span>{mapItem.expectedOutcome}<br/>
-                  <span className="defining">Actual Outcome: </span>{mapItem.actualOutcome}<br/>
+                  <span className="defining">Request: </span>{mapItem.request}<br/>
                 </div>
                 <div className="buttons">
                   <button
                     className="tabLinks"
                     onClick={() => {
-                      handleSwitchStatus('bug', mapItem, 'completed')
+                      handleSwitchStatus('feature', mapItem, 'completed')
                     }}
                   >
                     Complete
@@ -110,7 +108,7 @@ export default function FeatureTab ({ handleSwitchStatus, featureTickets }) {
                   <button
                     className="tabLinks"
                     onClick={() => {
-                      handleSwitchStatus('bug', mapItem, 'reported')
+                      handleSwitchStatus('feature', mapItem, 'approved')
                     }}
                   >
                     Undo
@@ -127,15 +125,13 @@ export default function FeatureTab ({ handleSwitchStatus, featureTickets }) {
                 <div className="information">
                   <span className="defining">Username: </span>{mapItem.username}<br/>
                   <span className="defining">Email Address: </span>{mapItem.email}<br/>
-                  <span className="defining">Steps to Reproduce: </span>{mapItem.reproduce}<br/>
-                  <span className="defining">Expected Outcome: </span>{mapItem.expectedOutcome}<br/>
-                  <span className="defining">Actual Outcome: </span>{mapItem.actualOutcome}<br/>
+                  <span className="defining">Request: </span>{mapItem.request}<br/>
                 </div>
                 <div className="buttons">
                   <button
                     className="tabLinks"
                     onClick={() => {
-                      handleSwitchStatus('bug', mapItem, 'inProgress')
+                      handleSwitchStatus('feature', mapItem, 'inProgress')
                     }}
                   >
                     Undo

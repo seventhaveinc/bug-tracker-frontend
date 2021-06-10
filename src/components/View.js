@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, } from "react";
+import { useHistory } from 'react-router-dom';
 import axios from "axios";
 import '../view.css'
 import BugTab from './BugTab.js'
@@ -6,6 +7,7 @@ import FeatureTab from './FeatureTab.js'
 
 function View(props) {
 
+  let history = useHistory();
   const [bugTickets, setBugTickets] = useState([]);
   const [featureTickets, setFeatureTickets] = useState([]);
   const [whichActive, setWhichActive] = useState('bugs');
@@ -48,7 +50,6 @@ function View(props) {
   return (
     <div className="grid-container">
       <div className="topbar">
-        <h4 className="link"><a href="/new">New Ticket</a></h4>
         <h1 className="title">Bug Tracker/Feature Requests</h1>
       </div>
       <div className="tabs">
@@ -70,6 +71,9 @@ function View(props) {
         >
           Bugs
         </button>
+        <button className="tabLinks" onClick={() => {
+          history.push('/new')
+        }}>New Ticket</button>
       </div>
       {(whichActive === 'bugs') ?
         <BugTab

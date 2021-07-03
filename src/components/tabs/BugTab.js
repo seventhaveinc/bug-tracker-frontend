@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import '../view.css'
+import '../../view.css'
 
 export default function BugTab ({ handleSwitchStatus, bugTickets }) {
 

@@ -3,15 +3,20 @@ import { Route, Switch, useHistory, Redirect } from 'react-router-dom'
 import axios from 'axios';
 import New from './components/New';
 import View from './components/View';
+import Login from './components/Login';
+import Denied from './components/Denied';
+import Navbar from './components/Navbar';
+
 
 const App = () => {
 
-  const handleInput = (event) => {
-    // setState({ ...state, [event.target.name]: event.target.value })
-  }
+  const [activePage, setActivePage] = useState('none');
 
   return (
     <div className="body">
+      <Navbar
+        activePage={activePage}
+      />
       <Switch>
         <Route
           exact
@@ -25,18 +30,36 @@ const App = () => {
         <Route
           path="/new"
           render={() => {
+            setActivePage('new');
             return(
-              <New
-                // handleInput={handleInput}
-              />
+              <New />
             )
           }}
         />
         <Route
           path="/view"
           render={() => {
+            setActivePage('view');
             return(
-              <View/>
+              <View />
+            )
+          }}
+        />
+        <Route
+          path="/login"
+          render={() => {
+            setActivePage('login')
+            return(
+              <Login />
+            )
+          }}
+        />
+        <Route
+          path="/denied"
+          render={() => {
+            setActivePage('none')
+            return(
+              <Denied />
             )
           }}
         />

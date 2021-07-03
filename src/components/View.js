@@ -2,8 +2,8 @@ import React, { useState, useEffect, } from "react";
 import { useHistory } from 'react-router-dom';
 import axios from "axios";
 import '../view.css'
-import BugTab from './BugTab.js'
-import FeatureTab from './FeatureTab.js'
+import BugTab from './tabs/BugTab.js'
+import FeatureTab from './tabs/FeatureTab.js'
 
 function View(props) {
 

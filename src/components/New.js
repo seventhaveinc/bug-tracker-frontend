@@ -2,6 +2,8 @@ import React, { useState, useEffect, } from "react";
 import axios from "axios";
 import { useHistory } from 'react-router-dom'
 import '../new.css';
+import NewBug from './tabs/NewBug';
+import NewFeature from './tabs/NewFeature';
 
 function New(props) {
   const [state, setState] = useState({
@@ -140,8 +142,15 @@ function New(props) {
         <div className="content">
 
           <h2 className="heading">Submit a Ticket</h2> &nbsp; &nbsp; <h4 style={fields}>*You must fill out all fields!</h4> <hr/>
+
+          {
+            (whichActive === 'bug') ? 
+              <NewBug /> :
+              <NewFeature />
+
+          }
         
-          <form>
+          {/* <form>
           
             <label htmlFor="username">Username:</label><br/>
 
@@ -167,11 +176,11 @@ function New(props) {
             <br/>
 
             {/* This maps over the list I have saved to state and changes the form that is displayed based on which tab is clicked */}
-            {activeTab.map((item) => {
+            {/* {activeTab.map((item) => {
 
               return(
                 <>
-                  <label htmlFor={item}>{(item === 'reproduce') ? 'Steps to Reproduce' : (item === 'expectedOutcome') ? 'Expected Outcome' : (item === 'actualOutcome') ? 'Actual Outcome' : 'Request'}:</label><br/> {/* This works, it's weird...but it works! */}
+                  <label htmlFor={item}>{(item === 'reproduce') ? 'Steps to Reproduce' : (item === 'expectedOutcome') ? 'Expected Outcome' : (item === 'actualOutcome' ) ? 'Actual Outcome' : 'Request'}:</label><br/>
                   <textarea
                     id={item}
                     name={item}
@@ -193,8 +202,7 @@ function New(props) {
               type="reset"
               className='tabLinks button'
             />
-          </form>
-        
+          </form> */}
         </div>
 
       </div>

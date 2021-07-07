@@ -23,7 +23,7 @@ export default function FeatureTab ({ handleSwitchStatus, featureTickets }) {
             return (filterItem.status === 'pending' || filterItem.status === 'approved' || filterItem.status === 'denied') //spaghetti code but it's the only thing that worked
           }).map((mapItem) => {
             return (
-              <div className={mapItem.status === 'approved' ? 'card approved' : (mapItem.status === 'denied') ? 'card denied' : 'card'}>
+              <div key={mapItem._id} className={mapItem.status === 'approved' ? 'card approved' : (mapItem.status === 'denied') ? 'card denied' : 'card'}>
                 <div className="information">
                   <span className="defining">Username: </span>{mapItem.username}<br/>
                   <span className="defining">Email Address: </span>{mapItem.email}<br/>

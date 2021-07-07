@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import { Route, Switch, useHistory, Redirect } from 'react-router-dom'
-import axios from 'axios';
 import New from './components/New';
 import View from './components/View';
 import Login from './components/Login';

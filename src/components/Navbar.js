@@ -1,12 +1,14 @@
 import React, { useState, useEffect, } from "react";
 import axios from "axios";
 import { useHistory } from 'react-router-dom'
+import '../view.css'
 
 function Navbar (props) {
 
   return (
-    <div>
-      {props.activePage}
+    <div className="topbar">
+      <img src="7th_logo.png" />
+      <h1 className="title">Bug Tracker</h1>
     </div>
   )
 }

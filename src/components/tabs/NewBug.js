@@ -8,13 +8,17 @@ function NewBug (props) {
 
   const history = useHistory();
 
+  useEffect(() => {
+    if (!localStorage.token) {
+      history.push('/denied');
+    }
+  }, [])
+
   const validate = (values) => {
     const errors = {};
 
-    if (!values.email || !values.username || !values.reproduce || !values.expectedOutcome || !values.actualOutcome) {
-      errors.username = 'All fields are required';
-    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-      errors.email = 'Invalid email address'
+    if (!values.reproduce || !values.expectedOutcome || !values.actualOutcome || !values.title) {
+      errors.reproduce = '*All fields are required';
     }
 
     return errors;
@@ -24,70 +28,75 @@ function NewBug (props) {
     <div>
       <Formik
         validate={validate}
-        initialValues{...{ username: '', email: '', reproduce: '', expectedOutcome: '', actualOutcome: ''}}
+        initialValues={{ reproduce: '', expectedOutcome: '', actualOutcome: '', title: '' }}
         onSubmit={async (values, actions) => {
           try {
             const response = await axios.post((process.env.REACT_APP_API_URL || 'http://localhost:3001') + '/bugs', {
-              username: values.username,
-              email: values.email,
               reproduce: values.reproduce,
               expectedOutcome: values.expectedOutcome,
-              actualOutcome: values.actualOutcome
+              actualOutcome: values.actualOutcome,
+              title: values.title
+            }, {
+              headers: {
+                token: localStorage.token
+              }
             });
-            history.push('/view');
+            
+            if (response.data) {
+              history.push('/denied');
+            } else {
+              history.push('/view');
+            }
           } catch (error) {
             console.error(error);
+            actions.setSubmitting(false);
           };
         }}
       >
         {props => (
           <form onSubmit={props.handleSubmit} className="form">
-            <input
-              type="text"
-              onChange={props.handleChange}
-              onBlur={props.handleBlur}
-              value={props.values.username}
-              name="username"
-            />
-            {props.errors.username && <div id="feedback">{props.errors.username}</div>}
 
-            <input
-              type="text"
-              onChange={props.handleChange}
-              onBlur={props.handleBlur}
-              value={props.values.email}
-              name="email"
-            />
-            {props.errors.email && <div id="feedback">{props.errors.email}</div>}
+            <div className="singleInput">
+              <label htmlFor="title">Title:</label>
+              <Field
+                name="title"
+                id="title"
+              />
+            </div>
 
-            <input
-              type="text"
-              onChange={props.handleChange}
-              onBlur={props.handleBlur}
-              value={props.values.reproduce}
-              name="reproduce"
-            />
+            <div className="singleInput">
+              <label htmlFor="reproduce">Steps to Reproduce:</label>
+              <Field
+                as="textarea"
+                name="reproduce"
+                rows="4"
+                cols="50"
+              />
+              
+            </div>
+            
+            <div className="singleInput">
+              <label htmlFor="expectedOutcome">Expected Outcome:</label>
+              <Field
+                as="textarea"
+                name="expectedOutcome"
+                rows="4"
+                cols="50"
+              />
+            </div>
+
+            <div className="singleInput">
+              <label htmlFor="actualOutcome">Actual Outcome:</label>
+              <Field
+                as="textarea"
+                name="actualOutcome"
+                rows="4"
+                cols="50"
+              />
+            </div>
+
+            <button className="tabLinks" id="submit" type="submit">Submit</button>
             {props.errors.reproduce && <div id="feedback">{props.errors.reproduce}</div>}
-
-            <input
-              type="text"
-              onChange={props.handleChange}
-              onBlur={props.handleBlur}
-              value={props.values.expectedOutcome}
-              name="expectedOutcome"
-            />
-            {props.errors.expectedOutcome && <div id="feedback">{props.errors.expectedOutcome}</div>}
-
-            <input
-              type="text"
-              onChange={props.handleChange}
-              onBlur={props.handleBlur}
-              value={props.values.actualOutcome}
-              name="actualOutcome"
-            />
-            {props.errors.actualOutcome && <div id="feedpack">{props.errors.actualOutcome}</div>}
-
-            <button type="submit">Submit</button>
           </form>
         )}
       </Formik>

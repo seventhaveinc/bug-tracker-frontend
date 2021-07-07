@@ -1,4 +1,4 @@
-import React, { useState, useEffect, } from "react";
+  import React, { useState, useEffect, } from "react";
 import { useHistory } from 'react-router-dom';
 import axios from "axios";
 import '../view.css'
@@ -14,11 +14,19 @@ function View(props) {
 
   useEffect(() => {
     async function fetchDataBug() {
-      const response = await axios.get((process.env.REACT_APP_API_URL || 'http://localhost:3001') + '/bugs');
+      const response = await axios.get((process.env.REACT_APP_API_URL || 'http://localhost:3001') + '/bugs', {
+        headers: {
+          token: localStorage.token
+        }
+      });
       setBugTickets(response.data);
     }
     async function fetchDataFeature() {
-      const response = await axios.get((process.env.REACT_APP_API_URL || 'http://localhost:3001') + '/features');
+      const response = await axios.get((process.env.REACT_APP_API_URL || 'http://localhost:3001') + '/features', {
+        headers: {
+          token: localStorage.token
+        }
+      });
       setFeatureTickets(response.data);
     }
     fetchDataBug();
@@ -33,7 +41,11 @@ function View(props) {
         array.splice(indexItem, 1);
         setBugTickets([...array, {...item, status: toSwitchTo}]);
 
-        const response = axios.put((process.env.REACT_APP_API_URL || 'http://localhost:3001') + `/bugs/${item._id}`, {...item, status: toSwitchTo});
+        const response = axios.put((process.env.REACT_APP_API_URL || 'http://localhost:3001') + `/bugs/${item._id}`, {...item, status: toSwitchTo}, {
+          headers: {
+            token: localStorage.token
+          }
+        });
       }
     } else {
       let array = featureTickets;
@@ -42,16 +54,17 @@ function View(props) {
         array.splice(indexItem, 1);
         setFeatureTickets([...array, {...item, status: toSwitchTo}]);
 
-        const response = axios.put((process.env.REACT_APP_API_URL || 'http://localhost:3001') + `/features/${item._id}`, {...item, status: toSwitchTo});
+        const response = axios.put((process.env.REACT_APP_API_URL || 'http://localhost:3001') + `/features/${item._id}`, {...item, status: toSwitchTo}, {
+          headers: {
+            token: localStorage.token
+          }
+        });
       }
     };
   };
 
   return (
     <div className="grid-container">
-      <div className="topbar">
-        <h1 className="title">Bug Tracker/Feature Requests</h1>
-      </div>
       <div className="tabs">
         <button
           className={(whichActive === 'features') ? 'active tabLinks' : 'tabLinks'}
@@ -75,15 +88,16 @@ function View(props) {
           history.push('/new')
         }}>New Ticket</button>
       </div>
-      {(whichActive === 'bugs') ?
+      {(whichActive === 'bugs' && bugTickets.length > 0) ?
         <BugTab
           handleSwitchStatus={handleSwitchStatus}
           bugTickets={bugTickets}
-        /> :
+        /> : (whichActive === 'features' && featureTickets.length > 0) ?
         <FeatureTab
           handleSwitchStatus={handleSwitchStatus}
           featureTickets={featureTickets}
-        />
+        /> :
+        null
         }
     </div>
   )

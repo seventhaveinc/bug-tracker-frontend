@@ -6,13 +6,20 @@
   width: 100vw;
   height: 100vh;
   color: rgba(5,113,118);
+  align-items: flex-start;
 }
 
 .box {
+  display: flex;
+  flex-direction: column;
   background-color: #e5e7eb;
+  border: 4px solid #F2762F;
   margin: 5%;
   padding: 15px;
   border-radius: 10px;
+  max-width: 90%;
+  justify-self: center;
+  max-height: 100%;
 }
 
 .tabLinks {
@@ -38,14 +45,33 @@
   margin: 5px 0px;
 }
 
-.textarea {
+textarea {
   border: none;
   resize: none;
-  margin: 5px 0px;
+  margin: 0 10px;
+  border-radius: 5px;
+  max-width: 70%;
+  max-height: 400px;
+}
+
+input {
+  border: none;
+  margin:10px;
+  border-radius: 5px;
+  max-width: 85%;
 }
 
 .form {
   display: flex;
+  flex-direction: column;
+}
+
+.singleInput {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin: 10px 0;
 }
 
 h2 {
@@ -54,4 +80,41 @@ h2 {
 
 h4 {
   display: inline;
+}
+
+.heading {
+  align-self: center;
+}
+
+#feedback {
+  color: red;
+}
+
+#title {
+  width: 70%;
+}
+
+#submit {
+  color:#F2762F;
+  font-weight: 600;
+
+}
+
+@media only screen and (max-width: 600px) {
+  .page {
+    max-width: 100%;
+  }
+  .box {
+    max-width: 85%;
+  }
+  .singleInput {
+    display: flex;
+    flex-direction: column;
+  }
+  textarea {
+    max-width: 85%;
+  }
+  input {
+    max-width: 85%;
+  }
 }

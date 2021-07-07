@@ -23,11 +23,8 @@ export default function BugTab ({ handleSwitchStatus, bugTickets }) {
             return (
               <div className="card">
                 <div className="information">
-                  <span className="defining">Username: </span>{mapItem.username}<br/>
-                  <span className="defining">Email Address: </span>{mapItem.email}<br/>
-                  <span className="defining">Steps to Reproduce: </span>{mapItem.reproduce}<br/>
-                  <span className="defining">Expected Outcome: </span>{mapItem.expectedOutcome}<br/>
-                  <span className="defining">Actual Outcome: </span>{mapItem.actualOutcome}<br/>
+                  <h3>{mapItem.title}</h3>
+                  <h5>{mapItem.username}</h5>
                 </div>
                 <div className="buttons">
                   <button
@@ -46,7 +43,7 @@ export default function BugTab ({ handleSwitchStatus, bugTickets }) {
         <div className="inProgress cardColumn middle">
           {bugTickets.filter((filterItem) => filterItem.status === 'inProgress').map((mapItem) => {
             return (
-              <div className="card">
+              <div className="card" key={mapItem._id}>
                 <div className="information">
                   <span className="defining">Username: </span>{mapItem.username}<br/>
                   <span className="defining">Email Address: </span>{mapItem.email}<br/>

@@ -52,6 +52,7 @@ function Login (props) {
                 <div className="singleInput">
                   <label htmlFor="password">Password</label>
                   <Field
+                    type="password"
                     name="password"
                   />
                 </div>

@@ -7,7 +7,7 @@ function Navbar (props) {
 
   return (
     <div className="topbar">
-      <img src="7th_logo.png" />
+      <img src="7th_logo.png" className="navbarlogo" />
       <h1 className="title">Bug Tracker</h1>
     </div>
   )

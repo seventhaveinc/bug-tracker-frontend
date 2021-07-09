@@ -4,6 +4,15 @@
   background-color: ghostwhite;
 }
 
+.tabs {
+  border-bottom: 2px solid rgba(5,113,118);
+}
+
+.navbarlogo {
+  align-self: center;
+  height: 40px;
+}
+
 .topbar {
   display: flex;
   background-color: #e5e7eb;
@@ -50,17 +59,18 @@
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
+  color: rgba(5,113,118);
 }
 
 .columnTop {
-  max-width: 33%;
-  flex-grow: 1;
+  width: 100%;
   text-align: center;
+  color: rgba(5,113,118);
 }
 
 .middle {
-  border-left: 1px solid black;
-  border-right: 1px solid black;
+  border-left: 2px solid rgba(5,113,118);
+  border-right: 2px solid rgba(5,113,118);
 }
 
 .cardContainer {
@@ -92,6 +102,10 @@
   margin: 5px;
 }
 
+.card h3 {
+  color: rgba(5,113,118);
+}
+
 .information {
   flex-grow: 3;
 }
@@ -104,18 +118,72 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  border-left: 1px solid black;
+  border-left: 2px solid rgba(5,113,118);
 }
 
-.approved {
+#approved {
   background-color: rgba(200, 249, 220);
+  border: 2px solid darkgreen;
 }
 
-.denied {
+#denied {
   background-color: rgba(255, 165, 165);
+  border: 2px solid darkred;
+}
+
+#denied h3 {
+  color: darkred;
+}
+
+#approved h3 {
+  color: darkgreen;
+}
+
+#approvedbuttons {
+  border-left: 2px solid darkgreen;
+}
+
+#deniedbuttons {
+  border-left: 2px solid darkred;
 }
 
 .background {
   background-color: black;
   opacity: 50%;
+}
+
+.navbuttons {
+  display: none;
+}
+
+@media only screen and (max-width: 600px) {
+
+  .navbuttons {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    bottom: 0px;
+    left: 0px;
+  }
+
+  .cardContainer {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .cardColumn {
+    display: flex;
+    max-width: 100%;
+  }
+
+  .floatingButton {
+    border: none;
+    padding: 6px;
+    border-radius: 12px;
+    background-color: #F2762F;
+    color: ghostwhite;
+    box-shadow: 0 3px 10px rgb(0 0 0 / 0.5);
+    margin: 5px;
+  }
+
 }

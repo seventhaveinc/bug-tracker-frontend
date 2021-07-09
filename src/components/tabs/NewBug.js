@@ -42,7 +42,7 @@ function NewBug (props) {
               }
             });
             
-            if (response.data) {
+            if (response.data.err) {
               history.push('/denied');
             } else {
               history.push('/view');

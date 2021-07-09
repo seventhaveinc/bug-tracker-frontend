@@ -11,7 +11,7 @@ function NewFeature (props) {
   const validate = (values) => {
     const errors = {};
 
-    if (!values.reproduce || !values.expectedOutcome || !values.actualOutcome) {
+    if (!values.title || !values.message) {
       errors.reproduce = '*All fields are required';
     }
     return errors;
@@ -23,17 +23,17 @@ function NewFeature (props) {
         validate={validate}
         initialValues={{ title: '', message: ''}}
         onSubmit={async (values, actions) => {
+          console.log('test');
           try {
-            const response = await axios.post((process.env.REACT_APP_API_URL || 'http://localhost:3001') + '/bugs', {
-              reproduce: values.reproduce,
-              expectedOutcome: values.expectedOutcome,
-              actualOutcome: values.actualOutcome
+            const response = await axios.post((process.env.REACT_APP_API_URL || 'http://localhost:3001') + '/features', {
+              title: values.title,
+              request: values.message
             }, {
               headers: {
                 token: localStorage.token
               }
             });
-            if (response.data) {
+            if (response.data.error) {
               history.push('/denied');
             } else {
               history.push('/view');

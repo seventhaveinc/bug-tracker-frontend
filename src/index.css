@@ -30,3 +30,7 @@ button .button {
   font-weight: 500;
   font-size: 14px;
 }
+
+html {
+  scroll-behavior: smooth;
+}

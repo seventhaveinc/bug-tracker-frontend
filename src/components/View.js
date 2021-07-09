@@ -14,20 +14,36 @@ function View(props) {
 
   useEffect(() => {
     async function fetchDataBug() {
-      const response = await axios.get((process.env.REACT_APP_API_URL || 'http://localhost:3001') + '/bugs', {
-        headers: {
-          token: localStorage.token
+      try {
+        const response = await axios.get((process.env.REACT_APP_API_URL || 'http://localhost:3001') + '/bugs', {
+          headers: {
+            token: localStorage.token
+          }
+        });
+        if (response.data.error) {
+          history.push('/denied');
+        } else {
+          setBugTickets(response.data);
         }
-      });
-      setBugTickets(response.data);
+      } catch (error) {
+        history.push('/denied');
+      }
     }
     async function fetchDataFeature() {
-      const response = await axios.get((process.env.REACT_APP_API_URL || 'http://localhost:3001') + '/features', {
-        headers: {
-          token: localStorage.token
+      try {
+        const response = await axios.get((process.env.REACT_APP_API_URL || 'http://localhost:3001') + '/features', {
+          headers: {
+            token: localStorage.token
+          }
+        });
+        if (response.data.error) {
+          history.push('/denied');
+        } else {
+          setFeatureTickets(response.data);
         }
-      });
-      setFeatureTickets(response.data);
+      } catch (error) {
+        history.push('/denied');
+      }
     }
     fetchDataBug();
     fetchDataFeature();
@@ -41,11 +57,15 @@ function View(props) {
         array.splice(indexItem, 1);
         setBugTickets([...array, {...item, status: toSwitchTo}]);
 
-        const response = axios.put((process.env.REACT_APP_API_URL || 'http://localhost:3001') + `/bugs/${item._id}`, {...item, status: toSwitchTo}, {
-          headers: {
-            token: localStorage.token
-          }
-        });
+        try {
+          const response = axios.put((process.env.REACT_APP_API_URL || 'http://localhost:3001') + `/bugs/${item._id}`, {...item, status: toSwitchTo}, {
+            headers: {
+              token: localStorage.token
+            }
+          });
+        } catch (error) {
+          history.push('/denied');
+        }
       }
     } else {
       let array = featureTickets;
@@ -53,12 +73,16 @@ function View(props) {
       if (indexItem > -1) {
         array.splice(indexItem, 1);
         setFeatureTickets([...array, {...item, status: toSwitchTo}]);
-
-        const response = axios.put((process.env.REACT_APP_API_URL || 'http://localhost:3001') + `/features/${item._id}`, {...item, status: toSwitchTo}, {
-          headers: {
-            token: localStorage.token
-          }
-        });
+        
+        try {
+          const response = axios.put((process.env.REACT_APP_API_URL || 'http://localhost:3001') + `/features/${item._id}`, {...item, status: toSwitchTo}, {
+            headers: {
+              token: localStorage.token
+            }
+          });
+        } catch (error) {
+          history.push('/denied');
+        }
       }
     };
   };

@@ -156,6 +156,11 @@
   display: none;
 }
 
+.denied {
+  color: rgba(5,113,118);
+  text-align: center;
+}
+
 @media only screen and (max-width: 600px) {
 
   .navbuttons {
